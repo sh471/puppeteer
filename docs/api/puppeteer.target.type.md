@@ -17,13 +17,14 @@ class Target {
     | 'shared_worker'
     | 'other'
     | 'browser'
-    | 'webview';
+    | 'webview'
+    | 'tab';
 }
 ```
 
 **Returns:**
 
-'page' \| 'background_page' \| 'service_worker' \| 'shared_worker' \| 'other' \| 'browser' \| 'webview'
+'page' \| 'background_page' \| 'service_worker' \| 'shared_worker' \| 'other' \| 'browser' \| 'webview' \| 'tab'
 
 ## Remarks
 

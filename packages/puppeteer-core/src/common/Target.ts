@@ -226,7 +226,8 @@ export class Target {
     | 'shared_worker'
     | 'other'
     | 'browser'
-    | 'webview' {
+    | 'webview'
+    | 'tab' {
     const type = this.#targetInfo.type;
     if (
       type === 'page' ||
@@ -234,7 +235,8 @@ export class Target {
       type === 'service_worker' ||
       type === 'shared_worker' ||
       type === 'browser' ||
-      type === 'webview'
+      type === 'webview' ||
+      type === 'tab'
     ) {
       return type;
     }

@@ -84,6 +84,9 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
   #initializePromise = createDeferredPromise<void>();
   #targetsIdsForInit: Set<string> = new Set();
 
+  #tabMode = false;
+  #discoveryFilter = this.#tabMode ? [{}] : [{type: 'tab', exclude: true}, {}];
+
   constructor(
     connection: Connection,
     targetFactory: TargetFactory,
@@ -103,7 +106,7 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
     this.#connection
       .send('Target.setDiscoverTargets', {
         discover: true,
-        filter: [{type: 'tab', exclude: true}, {}],
+        filter: this.#discoveryFilter,
       })
       .then(this.#storeExistingTargetsForInit)
       .catch(debugError);
@@ -129,6 +132,15 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
       waitForDebuggerOnStart: true,
       flatten: true,
       autoAttach: true,
+      filter: this.#tabMode
+        ? [
+            {
+              type: 'page',
+              exclude: true,
+            },
+            ...this.#discoveryFilter,
+          ]
+        : this.#discoveryFilter,
     });
     this.#finishInitializationIfReady();
     await this.#initializePromise;
@@ -144,7 +156,13 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
   }
 
   getAvailableTargets(): Map<string, Target> {
-    return this.#attachedTargetsByTargetId;
+    const result = new Map<string, Target>();
+    for (const [id, target] of this.#attachedTargetsByTargetId.entries()) {
+      if (target.type() !== 'tab') {
+        result.set(id, target);
+      }
+    }
+    return result;
   }
 
   addTargetInterceptor(
@@ -359,7 +377,7 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
     }
 
     this.#targetsIdsForInit.delete(target._targetId);
-    if (!existingTarget) {
+    if (!existingTarget && target.type() !== 'tab') {
       this.emit(TargetManagerEmittedEvents.TargetAvailable, target);
     }
     this.#finishInitializationIfReady();
@@ -371,6 +389,7 @@ export class ChromeTargetManager extends EventEmitter implements TargetManager {
         waitForDebuggerOnStart: true,
         flatten: true,
         autoAttach: true,
+        filter: this.#discoveryFilter,
       }),
       session.send('Runtime.runIfWaitingForDebugger'),
     ]).catch(debugError);

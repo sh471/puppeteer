@@ -80,7 +80,6 @@ async function main() {
 
   if (currentProtocolPackageInstalledVersion !== bestRevisionFromNpm) {
     console.log(`ERROR: bad devtools-protocol revision detected:
-
     Current Puppeteer Chrome revision: ${chromeRevision}
     Current devtools-protocol version in package.json: ${currentProtocolPackageInstalledVersion}
     Expected devtools-protocol version:                ${bestRevisionFromNpm}`);

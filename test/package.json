@@ -25,6 +25,20 @@
     }
   },
   "dependencies": {
-    "puppeteer": "file:../packages/puppeteer"
+    "diff": "5.1.0",
+    "mime": "3.0.0",
+    "pixelmatch": "5.3.0",
+    "pngjs": "7.0.0",
+    "jpeg-js": "0.4.4",
+    "puppeteer": "file:../packages/puppeteer",
+    "sinon": "15.1.0",
+    "zod": "3.21.4"
+  },
+  "devDependencies": {
+    "@types/diff": "5.0.3",
+    "@types/mime": "3.0.1",
+    "@types/pixelmatch": "5.2.4",
+    "@types/pngjs": "6.0.1",
+    "@types/sinon": "10.0.15"
   }
 }

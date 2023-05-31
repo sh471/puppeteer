@@ -107,7 +107,10 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.7",
-    "@types/yargs": "17.0.22"
+    "@types/progress": "2.0.5",
+    "@types/tar-fs": "2.0.1",
+    "@types/unbzip2-stream": "1.4.0",
+    "@types/yargs": "17.0.24"
   },
   "peerDependencies": {
     "typescript": ">= 4.7.4"

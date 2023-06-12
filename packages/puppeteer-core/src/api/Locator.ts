@@ -186,11 +186,19 @@ export abstract class Locator extends EventEmitter {
 
   abstract hover(hoverOptions?: {signal?: AbortSignal}): Promise<void>;
 
+  /**
+   * Scrolls the element.
+   */
   abstract scroll(scrollOptions?: {
     scrollTop?: number;
     scrollLeft?: number;
     signal?: AbortSignal;
   }): Promise<void>;
+
+  /**
+   * Waits for an element to be located.
+   */
+  abstract wait(waitOptions?: {signal?: AbortSignal}): Promise<void>;
 }
 
 /**
@@ -641,6 +649,18 @@ export class LocatorImpl extends Locator {
       }
     );
   }
+
+  override async wait(waitOptions?: {signal?: AbortSignal}): Promise<void> {
+    return await this.#run(
+      async _element => {
+        // No-op: we just wait for element to be there.
+      },
+      {
+        signal: waitOptions?.signal,
+        conditions: [this.#waitForVisibilityIfNeeded],
+      }
+    );
+  }
 }
 
 /**
@@ -797,6 +817,20 @@ class RaceLocatorImpl extends Locator {
       },
       {
         signal: scrollOptions?.signal,
+      }
+    );
+  }
+
+  override async wait(waitOptions?: {signal?: AbortSignal}): Promise<void> {
+    return await this.#runRace(
+      (locator, abortSignal) => {
+        return locator.wait({
+          ...waitOptions,
+          signal: abortSignal,
+        });
+      },
+      {
+        signal: waitOptions?.signal,
       }
     );
   }

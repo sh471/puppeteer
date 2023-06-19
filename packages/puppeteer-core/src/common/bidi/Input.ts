@@ -41,7 +41,7 @@ const enum InputId {
   Finger = '__puppeteer_finger',
 }
 
-const getBidiKeyValue = (key: string) => {
+const getBidiKeyValue = (key: KeyInput) => {
   switch (key) {
     case '\n':
       key = 'Enter';
@@ -52,8 +52,6 @@ const getBidiKeyValue = (key: string) => {
     return key;
   }
   switch (key) {
-    case 'Unidentified':
-      return '\uE000';
     case 'Cancel':
       return '\uE001';
     case 'Help':
@@ -64,22 +62,21 @@ const getBidiKeyValue = (key: string) => {
       return '\uE004';
     case 'Clear':
       return '\uE005';
-    case 'Return':
-      return '\uE006';
     case 'Enter':
       return '\uE007';
     case 'Shift':
+    case 'ShiftLeft':
       return '\uE008';
     case 'Control':
+    case 'ControlLeft':
       return '\uE009';
     case 'Alt':
+    case 'AltLeft':
       return '\uE00A';
     case 'Pause':
       return '\uE00B';
     case 'Escape':
       return '\uE00C';
-    case ' ':
-      return '\uE00D';
     case 'PageUp':
       return '\uE00E';
     case 'PageDown':
@@ -100,42 +97,6 @@ const getBidiKeyValue = (key: string) => {
       return '\uE016';
     case 'Delete':
       return '\uE017';
-    case ';':
-      return '\uE018';
-    case '=':
-      return '\uE019';
-    case '0':
-      return '\uE01A';
-    case '1':
-      return '\uE01B';
-    case '2':
-      return '\uE01C';
-    case '3':
-      return '\uE01D';
-    case '4':
-      return '\uE01E';
-    case '5':
-      return '\uE01F';
-    case '6':
-      return '\uE020';
-    case '7':
-      return '\uE021';
-    case '8':
-      return '\uE022';
-    case '9':
-      return '\uE023';
-    case '*':
-      return '\uE024';
-    case '+':
-      return '\uE025';
-    case ',':
-      return '\uE026';
-    case '-':
-      return '\uE027';
-    case '.':
-      return '\uE028';
-    case '/':
-      return '\uE029';
     case 'F1':
       return '\uE031';
     case 'F2':
@@ -161,9 +122,16 @@ const getBidiKeyValue = (key: string) => {
     case 'F12':
       return '\uE03C';
     case 'Meta':
+    case 'MetaLeft':
       return '\uE03D';
-    case 'ZenkakuHankaku':
-      return '\uE040';
+    case 'ShiftRight':
+      return '\uE050';
+    case 'ControlRight':
+      return '\uE051';
+    case 'AltRight':
+      return '\uE052';
+    case 'MetaRight':
+      return '\uE053';
     default:
       throw new Error(`Unknown key: "${key}"`);
   }

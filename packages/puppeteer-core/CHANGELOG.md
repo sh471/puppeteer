@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file. See [standa
   * dependencies
     * @puppeteer/browsers bumped from 1.0.1 to 1.1.0
 
+## [20.7.4](https://github.com/puppeteer/puppeteer/compare/puppeteer-core-v20.7.3...puppeteer-core-v20.7.4) (2023-06-26)
+
+
+### Bug Fixes
+
+* fix the util import in Connection.ts ([#10450](https://github.com/puppeteer/puppeteer/issues/10450)) ([61f4525](https://github.com/puppeteer/puppeteer/commit/61f4525ae306810404af9083d2e7440403c02722))
+
 ## [20.7.3](https://github.com/puppeteer/puppeteer/compare/puppeteer-core-v20.7.2...puppeteer-core-v20.7.3) (2023-06-20)
 
 

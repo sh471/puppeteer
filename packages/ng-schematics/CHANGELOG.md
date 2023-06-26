@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/puppeteer/puppeteer/compare/ng-schematics-v0.2.0...ng-schematics-v0.3.0) (2023-06-26)
+
+
+### Features
+
+* add Test command ([#10443](https://github.com/puppeteer/puppeteer/issues/10443)) ([2d8993b](https://github.com/puppeteer/puppeteer/commit/2d8993b45b0a0c5943907fe69f865e1064a23d3c))
+
 ## [0.2.0](https://github.com/puppeteer/puppeteer/compare/ng-schematics-v0.1.0...ng-schematics-v0.2.0) (2023-05-02)
 
 

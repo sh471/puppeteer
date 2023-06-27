@@ -105,7 +105,7 @@ async function startServer(
   const overrides = {
     watch: false,
     host: defaultServerOptions['host'],
-    port: defaultServerOptions['port'],
+    port: options.port ?? defaultServerOptions['port'],
   } as JsonObject;
 
   message(' Spawning test server ⚙️ ... \n', context);

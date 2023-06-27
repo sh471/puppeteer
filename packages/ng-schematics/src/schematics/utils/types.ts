@@ -25,6 +25,7 @@ export interface SchematicsOptions {
   isDefaultTester: boolean;
   exportConfig: boolean;
   testingFramework: TestingFramework;
+  port: number;
 }
 
 export interface SchematicsSpec {

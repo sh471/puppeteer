@@ -24,7 +24,11 @@ import {
 
 import {addBaseFiles} from '../utils/files.js';
 import {getAngularConfig} from '../utils/json.js';
-import {TestingFramework, SchematicsSpec} from '../utils/types.js';
+import {
+  TestingFramework,
+  SchematicsSpec,
+  SchematicsOptions,
+} from '../utils/types.js';
 
 // You don't have to export the function as default. You can also have more than one rule
 // factory per file.
@@ -34,21 +38,21 @@ export function test(options: SchematicsSpec): Rule {
   };
 }
 
-function findTestingFramework([name, project]: [
-  string,
-  any
-]): TestingFramework {
+function findTestingOption<Property extends keyof SchematicsOptions>(
+  [name, project]: [string, any],
+  property: Property
+): SchematicsOptions[Property] {
   const e2e = project.architect?.e2e;
   const puppeteer = project.architect?.puppeteer;
   const builder = '@puppeteer/ng-schematics:puppeteer';
 
   if (e2e?.builder === builder) {
-    return e2e.options.testingFramework;
+    return e2e.options[property];
   } else if (puppeteer?.builder === builder) {
-    return puppeteer.options.testingFramework;
+    return puppeteer.options[property];
   }
 
-  throw new Error(`Can't find TestingFramework info for project ${name}`);
+  throw new Error(`Can't find property "${property}" for project "${name}".`);
 }
 
 function addSpecFile(options: SchematicsSpec): Rule {
@@ -71,7 +75,11 @@ function addSpecFile(options: SchematicsSpec): Rule {
       );
     }
 
-    const testingFramework = findTestingFramework(foundProject);
+    const testingFramework = findTestingOption(
+      foundProject,
+      'testingFramework'
+    );
+    const port = findTestingOption(foundProject, 'port');
 
     context.logger.debug('Creating Spec file.');
 
@@ -83,6 +91,7 @@ function addSpecFile(options: SchematicsSpec): Rule {
         // Node test runner does not support glob patterns
         // It looks for files `*.test.js`
         ext: testingFramework === TestingFramework.Node ? 'test' : 'e2e',
+        port,
       },
     });
   };

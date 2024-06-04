@@ -175,7 +175,7 @@
     "puppeteer": "file:packages/puppeteer",
     "rimraf": "5.0.1",
     "rollup": "3.24.0",
-    "semver": "7.5.1",
+    "semver": "7.5.2",
     "sinon": "15.1.0",
     "source-map-support": "0.5.21",
     "spdx-satisfies": "5.0.1",
